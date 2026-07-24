@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "extra-renta"
+version = "0.1.0"
+description = "Generátor kandidátních kombinací, filtrační systém a scoring engine pro Extra Renta."
+requires-python = ">=3.10"
+readme = "extra_renta/README.md"
+
+[tool.pytest.ini_options]
+testpaths = ["extra_renta/tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+src = ["extra_renta"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+ignore = [
+  "E501",  # projekt zatím obsahuje delší české texty a reportovací řetězce
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+
+[tool.setuptools.packages.find]
+include = ["extra_renta*"]
+
+[tool.setuptools.package-data]
+"extra_renta.output" = ["templates/*.html", "static/*.css"]
+"extra_renta.web_app" = ["assets/*.webp"]
