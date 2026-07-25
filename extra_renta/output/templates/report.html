@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Extra Renta report – $preset_label</title>
+<style>
+$css
+</style>
+</head>
+<body>
+<div class="page">
+<section class="hero">
+  <div>
+    <div class="eyebrow light">Extra Renta · report po běhu</div>
+    <h1>Analytický přehled výsledků</h1>
+    <p>Předvolba: <strong>$preset_label</strong> <span class="small">($preset_key)</span> · režim: $generation_mode</p>
+  </div>
+  <button class="print-button" onclick="window.print()">Vytisknout / uložit PDF</button>
+</section>
+
+<div class="status-grid">$status_panel</div>
+
+<div class="grid">
+<div class="metric"><div class="label">Zpracováno</div><div class="value">$generated</div></div>
+<div class="metric"><div class="label">Po minimálním skóre</div><div class="value">$passed_min_score</div></div>
+<div class="metric"><div class="label">Výsledné kombinace</div><div class="value">$final_selected</div></div>
+<div class="metric"><div class="label">Maximální limit</div><div class="value">$max_output_count</div></div>
+</div>
+
+<section class="card first-place-section">
+<h2>Nejvýše hodnocená kombinace</h2>
+$first_candidate_html
+</section>
+
+<div class="card">
+<h2>Souhrn běhu</h2>
+<table>
+<tr><th>Všech možností</th><td>$total_possible</td></tr>
+<tr><th>Zpracováno</th><td>$generated</td></tr>
+<tr><th>Po tvrdých filtrech</th><td>$passed_hard_filters</td></tr>
+<tr><th>Po minimálním skóre</th><td>$passed_min_score</td></tr>
+<tr><th>Kandidátní pool pro MMR</th><td>$kept_for_diversity</td></tr>
+<tr><th>Výsledné kombinace</th><td>$final_selected</td></tr>
+<tr><th>Důvod ukončení</th><td>$stop_reason</td></tr>
+</table>
+</div>
+
+<div class="card"><h2>Průchod kombinací zpracováním</h2>$funnel_svg</div>
+<div class="card"><h2>Doporučený další krok</h2>$recommendation_html</div>
+<div class="card"><h2>Největší brzdy běhu</h2>$bottlenecks_html</div>
+
+<div class="card">
+<h2>Propustnost tvrdých filtrů</h2>
+<p class="small">Zamítnutí je přiřazeno prvnímu filtru, na kterém kombinace neprošla.</p>
+<div class="table-scroll"><table><tr><th>Filtr</th><th>Zamítnuto</th><th>Zůstává po filtru</th><th>% ze zpracovaných</th></tr>$filter_throughput_rows</table></div>
+</div>
+
+<div class="card"><h2>Zastoupení čísel ve výsledném portfoliu</h2>$number_frequency_svg</div>
+
+<div class="card">
+<h2>MMR portfolio výběr</h2>
+<table>
+<tr><th>Strategie</th><td>$selection_strategy</td></tr>
+<tr><th>Zvažováno kandidátů</th><td>$diversity_considered</td></tr>
+<tr><th>Zamítnuto kvůli překryvu</th><td>$diversity_rejected_overlap</td></tr>
+<tr><th>Zamítnuto kvůli tvrdému limitu dvojic</th><td>$diversity_rejected_pair</td></tr>
+<tr><th>Zamítnuto kvůli tvrdému limitu trojic</th><td>$diversity_rejected_triplet</td></tr>
+<tr><th>Vyhodnocení kandidátů</th><td>$mmr_candidate_evaluations</td></tr>
+<tr><th>Lazy přepočty</th><td>$mmr_heap_recomputations</td></tr>
+<tr><th>Průměrný marginální přínos</th><td>$mmr_average_gain</td></tr>
+<tr><th>Min./max. marginální přínos</th><td>$mmr_min_gain / $mmr_max_gain</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h2>Výsledné kombinace s vysvětlením</h2>
+<p class="small">V reportu je zobrazeno maximálně prvních 100 kombinací. Úplná data jsou dostupná v CSV a JSON exportu.</p>
+<div class="table-scroll">
+<table>
+<tr><th>#</th><th>Čísla</th><th>Skóre</th><th>Součet</th><th>L/S</th><th>Rozpětí</th><th>Přínos pro portfolio</th><th>Rozpad skóre</th></tr>
+$candidate_rows
+</table>
+</div>
+</div>
+
+<details class="technical-section">
+<summary>Technické podrobnosti reportu</summary>
+<div class="card inner-card"><h2>Benchmark výkonu</h2>
+<table>
+<tr><th>Celkem sekund</th><td>$benchmark_total</td></tr>
+<tr><th>Filtry + scoring</th><td>$benchmark_generation</td></tr>
+<tr><th>MMR výběr</th><td>$benchmark_selection</td></tr>
+<tr><th>Export</th><td>$benchmark_export</td></tr>
+<tr><th>Kombinací za sekundu</th><td>$benchmark_cps</td></tr>
+</table></div>
+<div class="card inner-card"><h2>Kontrola přísnosti pravidel</h2><ul>$strictness_rows</ul></div>
+<div class="card inner-card"><h2>Validace historických dat</h2><pre>$validation_json</pre></div>
+<div class="card inner-card"><h2>Použitá předvolba v kontextu ostatních</h2>$preset_comparison_html</div>
+</details>
+
+<details class="methodology-section">
+<summary>Metodika a důležité vymezení projektu</summary>
+<div class="disclaimer">
+<strong>Aplikace slouží pouze jako generátor kandidátních kombinací, filtrační systém, scoring engine, diverzifikační systém a reportingový nástroj.</strong>
+Historická data slouží pouze k analytickému porovnání. Aplikace negarantuje výhru ani vyšší matematickou pravděpodobnost výhry. Každá platná kombinace má v náhodném losování stejnou pravděpodobnost.
+</div>
+</details>
+
+<footer>Extra Renta · lokální analytický report</footer>
+</div>
+</body>
+</html>

@@ -3,7 +3,8 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 .venv/
-output/
+/output/
+.idea/
 .streamlit/secrets.toml
 .coverage
 htmlcov/
